@@ -1,4 +1,4 @@
-class ChannelsController < ApplicationController
+class V1::ChannelsController < ApplicationController
   before_action :set_channel, only: [:show, :update, :destroy]
 
   # GET /channels
@@ -18,7 +18,7 @@ class ChannelsController < ApplicationController
     @channel = Channel.new(channel_params)
 
     if @channel.save
-      render json: @channel, status: :created, location: @channel
+      render json: @channel, status: :created
     else
       render json: @channel.errors, status: :unprocessable_entity
     end

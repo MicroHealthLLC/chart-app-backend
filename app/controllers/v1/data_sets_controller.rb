@@ -1,4 +1,4 @@
-class DataSetsController < ApplicationController
+class V1::DataSetsController < ApplicationController
   before_action :set_data_set, only: [:show, :update, :destroy]
 
   # GET /data_sets
@@ -18,7 +18,7 @@ class DataSetsController < ApplicationController
     @data_set = DataSet.new(data_set_params)
 
     if @data_set.save
-      render json: @data_set, status: :created, location: @data_set
+      render json: @data_set, status: :created
     else
       render json: @data_set.errors, status: :unprocessable_entity
     end

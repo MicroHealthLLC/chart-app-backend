@@ -1,4 +1,4 @@
-class ReportsController < ApplicationController
+class V1::ReportsController < ApplicationController
   before_action :set_report, only: [:show, :update, :destroy]
 
   # GET /reports
@@ -18,7 +18,7 @@ class ReportsController < ApplicationController
     @report = Report.new(report_params)
 
     if @report.save
-      render json: @report, status: :created, location: @report
+      render json: @report, status: :created
     else
       render json: @report.errors, status: :unprocessable_entity
     end

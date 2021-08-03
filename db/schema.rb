@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2021_08_03_044748) do
 
   create_table "reports", force: :cascade do |t|
     t.string "title"
-    t.string "description"
+    t.text "description"
     t.string "chart_type"
     t.integer "channel_id"
     t.integer "data_set_id"
