@@ -5,12 +5,12 @@ class V1::ReportsController < ApplicationController
   def index
     @reports = Report.all
 
-    render json: @reports
+    render json: @reports.to_json(include: [:channel, :data_set])
   end
 
   # GET /reports/1
   def show
-    render json: @report
+    render json: @report.to_json(include: [:channel, :data_set])
   end
 
   # POST /reports
