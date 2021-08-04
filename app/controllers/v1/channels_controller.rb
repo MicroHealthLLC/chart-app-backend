@@ -10,7 +10,15 @@ class V1::ChannelsController < ApplicationController
 
   # GET /channels/1
   def show
-    render json: @channel.to_json(include: :reports)
+    render json: @channel.to_json(include: {
+      reports: {
+        include: [
+        :data_set, 
+        :channel => {
+          :only => [:id, :title]
+        }]
+      }
+    })
   end
 
   # POST /channels
