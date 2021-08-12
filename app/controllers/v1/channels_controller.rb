@@ -5,12 +5,12 @@ class V1::ChannelsController < ApplicationController
   def index
     @channels = Channel.all
 
-    render json: @channels
+    render json: @channels.to_json(include: :dashboards)
   end
 
   # GET /channels/1
   def show
-    render json: @channel.to_json(include: {
+    render json: @channel.to_json(include: [{
       reports: {
         include: [
         :data_set, 
@@ -18,7 +18,7 @@ class V1::ChannelsController < ApplicationController
           :only => [:id, :title]
         }]
       }
-    })
+    }, dashboards: {include: [:channel, :reports]}])
   end
 
   # POST /channels
