@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2021_08_05_222912) do
     t.integer "channel_id"
     t.string "layout"
     t.string "tags", array: true
+    t.integer "report_ids", array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

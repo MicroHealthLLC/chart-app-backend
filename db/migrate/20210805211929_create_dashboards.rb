@@ -6,6 +6,7 @@ class CreateDashboards < ActiveRecord::Migration[6.1]
       t.integer :channel_id
       t.string :layout
       t.string :tags, array: true
+      t.integer :report_ids, array: true
 
       t.timestamps
     end
