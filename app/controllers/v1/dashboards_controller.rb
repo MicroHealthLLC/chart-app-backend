@@ -46,6 +46,6 @@ class V1::DashboardsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def dashboard_params
-      params.require(:dashboard).permit(:title, :description, :channel_id, :layout, tags: [])
+      params.require(:dashboard).permit(:title, :description, :channel_id, :layout, tags: [], report_ids: [])
     end
 end
