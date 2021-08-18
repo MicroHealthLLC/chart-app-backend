@@ -19,3 +19,14 @@ Report.create(title: "Report 1", description: "This is Report 1", data_set_id: 1
 Report.create(title: "Report 2", description: "This is Report 2", data_set_id: 1, chart_type: "bar", channel_id: 1)
 
 Report.create(title: "Report 3", description: "This is Report 3", data_set_id: 1, chart_type: "pie", channel_id: 1)
+
+Tag.create(title: "Daily")
+Tag.create(title: "Weekly")
+Tag.create(title: "Monthly")
+Tag.create(title: "Yearly")
+Tag.create(title: "Finance")
+Tag.create(title: "Performance")
+Tag.create(title: "Costs")
+Tag.create(title: "Daily")
+Tag.create(title: "Employee")
+Tag.create(title: "Management")

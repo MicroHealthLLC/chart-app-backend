@@ -10,15 +10,16 @@ class V1::DashboardsController < ApplicationController
 
   # GET /dashboards/1
   def show
-    render json: @dashboard.to_json(include: {reports: {only: [:title, :chart_type], include: :data_set}})
+    render json: @dashboard.to_json(include: {reports: {only: [:id, :title, :chart_type], include: :data_set}})
   end
 
   # POST /dashboards
   def create
     @dashboard = Dashboard.new(dashboard_params)
+    @dashboard.report_ids = params[:report_ids] 
 
     if @dashboard.save
-      render json: @dashboard, status: :created
+      render json: @dashboard.to_json(include: {reports: {only: [:id, :title, :chart_type], include: :data_set}}), status: :created
     else
       render json: @dashboard.errors, status: :unprocessable_entity
     end
@@ -26,8 +27,10 @@ class V1::DashboardsController < ApplicationController
 
   # PATCH/PUT /dashboards/1
   def update
+    @dashboard.report_ids = params[:report_ids] 
+
     if @dashboard.update(dashboard_params)
-      render json: @dashboard
+      render json: @dashboard.to_json(include: {reports: {only: [:id, :title, :chart_type], include: :data_set}})
     else
       render json: @dashboard.errors, status: :unprocessable_entity
     end
@@ -46,6 +49,6 @@ class V1::DashboardsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def dashboard_params
-      params.require(:dashboard).permit(:title, :description, :channel_id, :layout, tags: [], report_ids: [])
+      params.require(:dashboard).permit(:title, :description, :channel_id, :layout, tags: [])
     end
 end
