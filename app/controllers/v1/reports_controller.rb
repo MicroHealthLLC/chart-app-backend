@@ -5,20 +5,21 @@ class V1::ReportsController < ApplicationController
   def index
     @reports = Report.all
 
-    render json: @reports.to_json(include: [:channel, :data_set])
+    render json: @reports.to_json(include: [:channel, :data_set, :tags])
   end
 
   # GET /reports/1
   def show
-    render json: @report.to_json(include: [:channel, :data_set])
+    render json: @report.to_json(include: [:channel, :data_set, :tags])
   end
 
   # POST /reports
   def create
     @report = Report.new(report_params)
+    @report.tag_ids = params[:tag_ids]
 
     if @report.save
-      render json: @report, status: :created
+      render json: @report.to_json(include: :tags), status: :created
     else
       render json: @report.errors, status: :unprocessable_entity
     end
@@ -26,8 +27,10 @@ class V1::ReportsController < ApplicationController
 
   # PATCH/PUT /reports/1
   def update
+     @report.tag_ids = params[:tag_ids]
+
     if @report.update(report_params)
-      render json: @report
+      render json: @report.to_json(include: :tags)
     else
       render json: @report.errors, status: :unprocessable_entity
     end

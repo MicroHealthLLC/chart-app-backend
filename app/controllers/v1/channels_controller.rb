@@ -14,6 +14,7 @@ class V1::ChannelsController < ApplicationController
       reports: {
         include: [
         :data_set, 
+        :tags,
         :channel => {
           :only => [:id, :title]
         }]
