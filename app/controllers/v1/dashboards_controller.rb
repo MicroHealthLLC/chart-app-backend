@@ -5,21 +5,22 @@ class V1::DashboardsController < ApplicationController
   def index
     @dashboards = Dashboard.all
 
-    render json: @dashboards.to_json(include: [:channel, {reports: {only: [:title, :chart_type], include: :data_set}}])
+    render json: @dashboards.to_json(include: [:channel, :tags, {reports: {only: [:title, :chart_type], include: :data_set}}])
   end
 
   # GET /dashboards/1
   def show
-    render json: @dashboard.to_json(include: {reports: {only: [:id, :title, :chart_type], include: :data_set}})
+    render json: @dashboard.to_json(include: [:tags, {reports: {only: [:id, :title, :description, :chart_type], include: :data_set}}])
   end
 
   # POST /dashboards
   def create
     @dashboard = Dashboard.new(dashboard_params)
     @dashboard.report_ids = params[:report_ids] 
+    @dashboard.tag_ids = params[:tag_ids]
 
     if @dashboard.save
-      render json: @dashboard.to_json(include: {reports: {only: [:id, :title, :chart_type], include: :data_set}}), status: :created
+      render json: @dashboard.to_json(include: [:tags, {reports: {only: [:id, :title, :chart_type], include: :data_set}}]), status: :created
     else
       render json: @dashboard.errors, status: :unprocessable_entity
     end
@@ -28,9 +29,10 @@ class V1::DashboardsController < ApplicationController
   # PATCH/PUT /dashboards/1
   def update
     @dashboard.report_ids = params[:report_ids] 
+    @dashboard.tag_ids = params[:tag_ids]
 
     if @dashboard.update(dashboard_params)
-      render json: @dashboard.to_json(include: {reports: {only: [:id, :title, :chart_type], include: :data_set}})
+      render json: @dashboard.to_json(include: [:tags, {reports: {only: [:id, :title, :chart_type], include: :data_set}}])
     else
       render json: @dashboard.errors, status: :unprocessable_entity
     end

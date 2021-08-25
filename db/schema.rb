@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_18_030827) do
+ActiveRecord::Schema.define(version: 2021_08_23_204420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,13 @@ ActiveRecord::Schema.define(version: 2021_08_18_030827) do
   create_table "dashboard_reports", force: :cascade do |t|
     t.integer "dashboard_id"
     t.integer "report_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "dashboard_tags", force: :cascade do |t|
+    t.integer "dashboard_id"
+    t.integer "tag_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
