@@ -5,7 +5,7 @@ class V1::ChannelsController < ApplicationController
   def index
     @channels = Channel.all
 
-    render json: @channels.to_json(include: :dashboards)
+    render json: @channels.order(title: :ASC).to_json(include: :dashboards)
   end
 
   # GET /channels/1
@@ -36,7 +36,16 @@ class V1::ChannelsController < ApplicationController
   # PATCH/PUT /channels/1
   def update
     if @channel.update(channel_params)
-      render json: @channel
+      render json: @channel.to_json(include: [{
+        reports: {
+          include: [
+          :data_set, 
+          :tags,
+          :channel => {
+            :only => [:id, :title]
+          }]
+        }
+      }, dashboards: {include: [:channel, :reports]}])
     else
       render json: @channel.errors, status: :unprocessable_entity
     end

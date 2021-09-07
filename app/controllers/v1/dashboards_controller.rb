@@ -10,7 +10,7 @@ class V1::DashboardsController < ApplicationController
 
   # GET /dashboards/1
   def show
-    render json: @dashboard.to_json(include: [:tags, {reports: {only: [:id, :title, :description, :chart_type], include: :data_set}}])
+    render json: @dashboard.to_json(include: [:tags, {reports: {only: [:id, :title, :description, :chart_type, :color_scheme_id], include: :data_set}}])
   end
 
   # POST /dashboards
