@@ -8,8 +8,9 @@
 
 admin_user = User.find_or_create_by(email: "admin@example.com") do |user|
   user.email = "admin@example.com"
-  user.name = "Admin user"
-  user.password = "1234567"  
+  user.first_name = "Admin"
+  user.last_name = "User"
+  user.password = "password"  
 end
 
 Tag.create(title: "Daily")
