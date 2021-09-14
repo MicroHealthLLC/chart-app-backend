@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     resources :tags
     resources :dashboards
     resources :news
+    resources :users
+    post "/login", to: "authentication#login"
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
