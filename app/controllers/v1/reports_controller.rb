@@ -10,7 +10,7 @@ class V1::ReportsController < ApplicationController
 
   # GET /reports/1
   def show
-    render json: @report.to_json(include: [:channel, :data_set, :tags])
+    render json: @report.to_json(include: [:channel, :data_set, :tags, { user: {only: [:id, :first_name, :last_name]}}])
   end
 
   # POST /reports
@@ -19,7 +19,7 @@ class V1::ReportsController < ApplicationController
     @report.tag_ids = params[:tag_ids]
 
     if @report.save
-      render json: @report.to_json(include: :tags), status: :created
+      render json: @report.to_json(include: [:channel, :data_set, :tags, { user: {only: [:id, :first_name, :last_name]}}]), status: :created
     else
       render json: @report.errors, status: :unprocessable_entity
     end
@@ -30,7 +30,7 @@ class V1::ReportsController < ApplicationController
      @report.tag_ids = params[:tag_ids]
 
     if @report.update(report_params)
-      render json: @report.to_json(include: :tags)
+      render json: @report.to_json(include: [:channel, :data_set, :tags, { user: {only: [:id, :first_name, :last_name]}}])
     else
       render json: @report.errors, status: :unprocessable_entity
     end
@@ -49,6 +49,6 @@ class V1::ReportsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def report_params
-      params.require(:report).permit(:title, :description, :chart_type, :channel_id, :data_set_id, :color_scheme_id, tags: [])
+      params.require(:report).permit(:title, :description, :chart_type, :channel_id, :data_set_id, :color_scheme_id, :user_id, :last_updated_by, tags: [])
     end
 end

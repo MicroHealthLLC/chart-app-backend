@@ -43,6 +43,7 @@ Channel.create(
 )
 
 DataSet.create(
+  user_id: 1,
   title: "2020 Team Progress",
   description: "Tasks, Isssues, and Risks completed by team in 2020.", 
   data: [
@@ -78,6 +79,7 @@ DataSet.create(
 )
 
 DataSet.create(
+  user_id: 1,
   title: "2020 Team Totals",
   description: "Total Tasks, Isssues, and Risks completed by team in 2020.", 
   data: [
@@ -101,6 +103,7 @@ DataSet.create(
 )
 
 DataSet.create(
+  user_id: 1,
   title: "2020 Team Member Totals",
   description: "Total Tasks, Isssues, Risks, and Lessons completed by team member in 2020.", 
   data: [
@@ -136,6 +139,7 @@ DataSet.create(
 )
 
 Report.create(
+  user_id: 1,
   title: "2020 Team Progress",
   description: "Tasks, Isssues, Risks, and Lessons completed by team in 2020.", 
   data_set_id: 1,
@@ -146,6 +150,7 @@ Report.create(
 )
 
 Report.create(
+  user_id: 1,
   title: "2020 Totals",
   description: "2020 Totals for Tasks, Issues, Risks, and Lessons",
   data_set_id: 2,
@@ -156,6 +161,7 @@ Report.create(
 )
 
 Report.create(
+  user_id: 1,
   title: "2020 Team Member Totals",
   description: "Total Tasks, Isssues, Risks, and Lessons completed by team member in 2020.", 
   data_set_id: 3,
@@ -166,6 +172,7 @@ Report.create(
 )
 
 Dashboard.create(
+  user_id: 1,
   title: "2020 Progress",
   description: "2020 Progress for Tasks, Issues, Risks, and Lessons Learned.",
   channel_id: 1,
@@ -175,6 +182,7 @@ Dashboard.create(
 )
 
 News.create(
+  user_id: 1,
   title: "Welcome!",
   body: "Welcome to mRMS."
 )
