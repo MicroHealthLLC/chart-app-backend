@@ -34,7 +34,8 @@ class V1::DashboardsController < ApplicationController
             :color_scheme_id
           ],
           include: :data_set
-        }
+        },
+        user: {only: [:id, :first_name, :last_name]}
       ]
     )
   end
@@ -56,7 +57,8 @@ class V1::DashboardsController < ApplicationController
               :chart_type
             ],
             include: :data_set
-          }
+          },
+          user: {only: [:id, :first_name, :last_name]}
         ]
       ),
       status: :created
@@ -82,7 +84,8 @@ class V1::DashboardsController < ApplicationController
               :color_scheme_id
             ],
             include: :data_set
-          }  
+          },
+          user: {only: [:id, :first_name, :last_name]}
         ]
       )
     else
@@ -103,6 +106,14 @@ class V1::DashboardsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def dashboard_params
-      params.require(:dashboard).permit(:title, :description, :channel_id, :layout, tags: [])
+      params.require(:dashboard).permit(
+        :title,
+        :description,
+        :channel_id,
+        :layout,
+        :user_id,
+        :last_updated_by,
+        tags: []
+      )
     end
 end

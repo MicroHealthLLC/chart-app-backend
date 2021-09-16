@@ -146,7 +146,8 @@ Report.create(
   chart_type: "area",
   channel_id: 1,
   tag_ids: [4, 6],
-  color_scheme_id: 1
+  color_scheme_id: 1,
+  last_updated_by: "Admin User"
 )
 
 Report.create(
@@ -157,7 +158,8 @@ Report.create(
   chart_type: "bar",
   channel_id: 1,
   tag_ids: [4, 6],
-  color_scheme_id: 1
+  color_scheme_id: 1,
+  last_updated_by: "Admin User"
 )
 
 Report.create(
@@ -168,7 +170,8 @@ Report.create(
   chart_type: "pie",
   channel_id: 1,
   tag_ids: [4, 6],
-  color_scheme_id: 3
+  color_scheme_id: 3,
+  last_updated_by: "Admin User"
 )
 
 Dashboard.create(
@@ -178,7 +181,8 @@ Dashboard.create(
   channel_id: 1,
   layout: "layout-1",
   report_ids: [1, 2, 3],
-  tag_ids: [4, 6]
+  tag_ids: [4, 6],
+  last_updated_by: "Admin User"
 )
 
 News.create(
