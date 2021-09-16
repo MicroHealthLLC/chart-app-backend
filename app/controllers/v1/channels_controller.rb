@@ -10,16 +10,22 @@ class V1::ChannelsController < ApplicationController
 
   # GET /channels/1
   def show
-    render json: @channel.to_json(include: [{
-      reports: {
-        include: [
-        :data_set, 
-        :tags,
-        :channel => {
-          :only => [:id, :title]
-        }]
-      }
-    }, dashboards: {include: [:channel, :reports]}])
+    render json: @channel.to_json(include: 
+      [
+        reports: {
+          include: [
+            :data_set, 
+            :tags,
+            :channel => {
+              :only => [:id, :title]
+            }
+          ]
+        },
+        dashboards: {
+          include: [:channel, :reports]
+        }
+      ]
+    )
   end
 
   # POST /channels
@@ -36,16 +42,22 @@ class V1::ChannelsController < ApplicationController
   # PATCH/PUT /channels/1
   def update
     if @channel.update(channel_params)
-      render json: @channel.to_json(include: [{
-        reports: {
-          include: [
-          :data_set, 
-          :tags,
-          :channel => {
-            :only => [:id, :title]
-          }]
-        }
-      }, dashboards: {include: [:channel, :reports]}])
+      render json: @channel.to_json(include: 
+        [   
+          reports: {
+            include: [
+              :data_set, 
+              :tags,
+              :channel => {
+                :only => [:id, :title]
+              }
+            ]
+          },
+          dashboards: {
+            include: [:channel, :reports]   
+          }
+        ]
+      )
     else
       render json: @channel.errors, status: :unprocessable_entity
     end
