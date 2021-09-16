@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   include BCrypt
+  has_many :channels
   has_many :reports
   has_many :dashboards
   has_many :news

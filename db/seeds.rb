@@ -25,18 +25,21 @@ Tag.create(title: "Employee")
 Tag.create(title: "Management")
 
 Channel.create(
+  user_id: 1,
   title: "Public Channel 1",
   description: "This channel shows public reports for everyone to see.",
   category: "public"
 )
 
 Channel.create(
+  user_id: 1,
   title: "Group Channel 1",
   description: "This channel shows group reports for members.",
   category: "group"
 )
 
 Channel.create(
+  user_id: 1,
   title: "My Reports",
   description: "This channel shows my reports.",
   category: "personal"
