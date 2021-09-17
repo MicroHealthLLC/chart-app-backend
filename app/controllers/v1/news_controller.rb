@@ -5,7 +5,13 @@ class V1::NewsController < ApplicationController
   def index
     @news = News.all
 
-    render json: @news.order(created_at: :DESC)
+    render json: @news.order(created_at: :DESC).to_json(include:
+      [
+        user: {
+          only: [:first_name, :last_name]
+        }
+      ]
+    )
   end
 
   # GET /news/1
@@ -46,6 +52,6 @@ class V1::NewsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def news_params
-      params.require(:news).permit(:title, :body)
+      params.require(:news).permit(:title, :body, :user_id)
     end
 end
