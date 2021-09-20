@@ -48,7 +48,8 @@ Channel.create(
 DataSet.create(
   user_id: 1,
   title: "2020 Team Progress",
-  description: "Tasks, Isssues, and Risks completed by team in 2020.", 
+  description: "Tasks, Isssues, and Risks completed by team in 2020.",
+  channel_ids: [1,2,3],
   data: [
     {
      Quarter: "Quarter 1",
@@ -84,7 +85,8 @@ DataSet.create(
 DataSet.create(
   user_id: 1,
   title: "2020 Team Totals",
-  description: "Total Tasks, Isssues, and Risks completed by team in 2020.", 
+  description: "Total Tasks, Isssues, and Risks completed by team in 2020.",
+  channel_ids: [1,2,3],
   data: [
     {
       Item: "Tasks",
@@ -108,7 +110,8 @@ DataSet.create(
 DataSet.create(
   user_id: 1,
   title: "2020 Team Member Totals",
-  description: "Total Tasks, Isssues, Risks, and Lessons completed by team member in 2020.", 
+  description: "Total Tasks, Isssues, Risks, and Lessons completed by team member in 2020.",
+  channel_ids: [1,2,3],
   data: [
     {
       Person: "John Doe",
