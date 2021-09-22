@@ -24,25 +24,25 @@ Tag.create(title: "Daily")
 Tag.create(title: "Employee")
 Tag.create(title: "Management")
 
-Channel.create(
+Channel.find_or_create_by!(
   user_id: 1,
   title: "Public Channel 1",
   description: "This channel shows public reports for everyone to see.",
-  category: "public"
+  category: 2
 )
 
-Channel.create(
+Channel.find_or_create_by!(
   user_id: 1,
   title: "Group Channel 1",
   description: "This channel shows group reports for members.",
-  category: "group"
+  category: 0
 )
 
-Channel.create(
+Channel.find_or_create_by!(
   user_id: 1,
   title: "My Reports",
   description: "This channel shows my reports.",
-  category: "personal"
+  category: 1
 )
 
 DataSet.create(
