@@ -5,7 +5,7 @@ class V1::ReportsController < ApplicationController
   def index
     @group_reports = Report.group_reports.to_json(include: %i[channel data_set tags])
     @public_reports = Report.public_reports.to_json(include: %i[channel data_set tags])
-    @personal_reports = Report.personal_reports.to_json(include: %i[channel data_set tags])
+    @personal_reports = Report.personal_reports(params[:user_id]).to_json(include: %i[channel data_set tags])
 
     render json: { group: @group_reports, public: @public_reports, personal: @personal_reports }.to_json
   end

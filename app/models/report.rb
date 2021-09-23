@@ -9,5 +9,5 @@ class Report < ApplicationRecord
 
   scope :group_reports, -> { joins(:channel).where(channels: { category: 0 }) }
   scope :public_reports, -> { joins(:channel).where(channels: { category: 2 }) }
-  scope :personal_reports, -> { joins(:channel).where(channels: { category: 1 }) }
+  scope :personal_reports, ->(user_id) { joins(:channel).where(channels: { category: 1 }, user_id: user_id) }
 end
