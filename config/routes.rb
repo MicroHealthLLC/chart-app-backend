@@ -3,6 +3,9 @@ Rails.application.routes.draw do
     resources :data_sets
     resources :reports
     resources :channels
+    resources :channels do
+      resources :data_sets, only: :index
+    end
     resources :tags
     resources :dashboards
     resources :news

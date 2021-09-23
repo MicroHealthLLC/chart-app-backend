@@ -3,7 +3,11 @@ class V1::DataSetsController < ApplicationController
 
   # GET /data_sets
   def index
-    @data_sets = DataSet.all
+    if params[:channel_id]
+      @data_sets = Channel.find(params[:channel_id]).data_sets
+    else
+      @data_sets = DataSet.all
+    end
 
     render json: @data_sets
   end
