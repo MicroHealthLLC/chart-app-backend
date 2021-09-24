@@ -3,9 +3,11 @@ class V1::ChannelsController < ApplicationController
 
   # GET /channels
   def index
-    @channels = Channel.all
-
-    render json: @channels.order(title: :ASC).to_json(include: :dashboards)
+    render json: {
+      public: Channel.public_channel.order(title: :ASC),
+      personal: Channel.user_personal_channel(params[:user_id]).order(title: :ASC),
+      group: Channel.group_channel.order(title: :ASC)
+    }.to_json(include: :dashboards)
   end
 
   # GET /channels/1
