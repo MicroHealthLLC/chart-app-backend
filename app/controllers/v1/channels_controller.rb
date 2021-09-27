@@ -14,6 +14,7 @@ class V1::ChannelsController < ApplicationController
   def show
     render json: @channel.to_json(include: 
       [
+        members: {only: [:id, :first_name, :last_name]},
         reports: {
           include: [
             :data_set, 
@@ -34,6 +35,7 @@ class V1::ChannelsController < ApplicationController
   # POST /channels
   def create
     @channel = Channel.new(channel_params)
+    @channel.member_ids = params[:member_ids]
 
     if @channel.save
       render json: @channel, status: :created
@@ -44,9 +46,12 @@ class V1::ChannelsController < ApplicationController
 
   # PATCH/PUT /channels/1
   def update
+    @channel.member_ids = params[:member_ids]
+
     if @channel.update(channel_params)
       render json: @channel.to_json(include: 
-        [   
+        [
+          members: {only: [:id, :first_name, :last_name]},
           reports: {
             include: [
               :data_set, 
@@ -79,6 +84,6 @@ class V1::ChannelsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def channel_params
-      params.require(:channel).permit(:title, :description, :category, :user_id)
+      params.require(:channel).permit(:title, :description, :category, :user_id, members: [])
     end
 end

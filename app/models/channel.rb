@@ -5,6 +5,9 @@ class Channel < ApplicationRecord
   has_many :data_set_channels
   has_many :data_sets, through: :data_set_channels
 
+  has_many :channel_members
+  has_many :members, through: :channel_members, source: :user
+
   enum category: %w[group_channel personal_channel public_channel]
 
   scope :user_personal_channel, ->(user_id) { personal_channel.where(user_id: user_id) }

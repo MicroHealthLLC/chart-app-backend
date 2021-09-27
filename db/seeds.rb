@@ -35,7 +35,8 @@ Channel.find_or_create_by!(
   user_id: 1,
   title: "Group Channel 1",
   description: "This channel shows group reports for members.",
-  category: 0
+  category: 0,
+  member_ids: [1]
 )
 
 Channel.find_or_create_by!(
