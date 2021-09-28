@@ -4,7 +4,7 @@ class V1::ReportsController < ApplicationController
 # GET /reports
   def index
     @public_reports = Report.public_reports.latest
-    @personal_reports = Report.personal_reports(params[:user_id]).latest
+    @personal_reports = Report.personal_reports(@current_user).latest
     @group_reports = Report.group_reports.latest
 
     render json: {

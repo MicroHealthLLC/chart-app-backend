@@ -5,7 +5,7 @@ class V1::ChannelsController < ApplicationController
   def index
     render json: {
       public: Channel.public_channel.order(title: :ASC),
-      personal: Channel.user_personal_channel(params[:user_id]).order(title: :ASC),
+      personal: Channel.user_personal_channel(@current_user).order(title: :ASC),
       group: Channel.group_channel.order(title: :ASC)
     }.to_json(include: :dashboards)
   end
