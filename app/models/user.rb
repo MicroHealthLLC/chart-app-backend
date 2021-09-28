@@ -6,6 +6,9 @@ class User < ApplicationRecord
   has_many :news
   has_many :data_sets
 
+  has_many :channel_members
+  has_many :channels, through: :channel_members
+
   def password
     @password ||= Password.new(password_hash)
   end
