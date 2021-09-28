@@ -16,16 +16,15 @@ class V1::ReportsController < ApplicationController
 
   # GET /reports/1
   def show
-    render json: @report.to_json(include: 
-      [
-        :channel,
-        :data_set,
-        :tags, 
-        {
-          user: {only: [:id, :first_name, :last_name]}
-        }
-      ]
-    )
+    if @report.channel.category == "personal_channel" && @current_user.id == @report.user.id
+      report_response
+    elsif @report.channel.category == "group_channel" && @report.channel.member_ids.include?(@current_user.id)
+      report_response
+    elsif @report.channel.category == "public_channel"
+      report_response
+    else
+      render json: { errors: ['You do not have access to this data!'] }, status: :unauthorized
+    end
   end
 
   # POST /reports
@@ -55,16 +54,7 @@ class V1::ReportsController < ApplicationController
      @report.tag_ids = params[:tag_ids]
 
     if @report.update(report_params)
-      render json: @report.to_json(include:
-        [
-          :channel,
-          :data_set,
-          :tags,
-          { 
-            user: {only: [:id, :first_name, :last_name]}
-          }
-        ]
-      )
+      report_response
     else
       render json: @report.errors, status: :unprocessable_entity
     end
@@ -93,6 +83,19 @@ class V1::ReportsController < ApplicationController
         :user_id,
         :last_updated_by,
         tags: []
+      )
+    end
+
+    def report_response
+      render json: @report.to_json(include: 
+        [
+          :channel,
+          :data_set,
+          :tags, 
+          {
+            user: {only: [:id, :first_name, :last_name]}
+          }
+        ]
       )
     end
 end
