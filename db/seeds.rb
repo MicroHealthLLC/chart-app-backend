@@ -13,6 +13,15 @@ admin_user = User.find_or_create_by(email: "admin@example.com") do |user|
   user.password = "password"  
 end
 
+["One", "Two", "Three", "Four", "Five"].each do |value|
+  User.create(
+    first_name: "User",
+    last_name: value,
+    email: "user_#{value.downcase}@example.com",
+    password: "password"
+  )
+end
+
 Tag.create(title: "Daily")
 Tag.create(title: "Weekly")
 Tag.create(title: "Monthly")
@@ -28,7 +37,8 @@ Channel.find_or_create_by!(
   user_id: 1,
   title: "Public Channel 1",
   description: "This channel shows public reports for everyone to see.",
-  category: 2
+  category: 2,
+  member_ids: []
 )
 
 Channel.find_or_create_by!(
@@ -36,14 +46,15 @@ Channel.find_or_create_by!(
   title: "Group Channel 1",
   description: "This channel shows group reports for members.",
   category: 0,
-  member_ids: [1]
+  member_ids: [1,2,3,4,5,6]
 )
 
 Channel.find_or_create_by!(
   user_id: 1,
   title: "My Reports",
   description: "This channel shows my reports.",
-  category: 1
+  category: 1,
+  member_ids: []
 )
 
 DataSet.create(
@@ -195,5 +206,5 @@ Dashboard.create(
 News.create(
   user_id: 1,
   title: "Welcome!",
-  body: "Welcome to mRMS."
+  body: "Welcome to mRMS. Create a Channel, create a data set, create reports!"
 )

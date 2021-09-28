@@ -63,7 +63,8 @@ class V1::ChannelsController < ApplicationController
           },
           dashboards: {
             include: [:channel, :reports]   
-          }
+          },
+          user: {only: [:id, :first_name, :last_name]}
         ]
       )
     else
