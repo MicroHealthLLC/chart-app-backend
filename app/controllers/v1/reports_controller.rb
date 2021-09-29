@@ -1,10 +1,11 @@
 class V1::ReportsController < ApplicationController
   before_action :set_report, only: [:show, :update, :destroy]
+  before_action :report_user?, except: %i[index new create]
 
 # GET /reports
   def index
     @public_reports = Report.public_reports.latest
-    @personal_reports = Report.personal_reports(params[:user_id]).latest
+    @personal_reports = Report.personal_reports(@current_user).latest
     @group_reports = Report.group_reports.latest
 
     render json: {
@@ -94,5 +95,9 @@ class V1::ReportsController < ApplicationController
         :last_updated_by,
         tags: []
       )
+    end
+
+    def report_user?
+      render json: { errors: ['Forbidden access'] }, status: :forbidden if @report.no_access?(@current_user)
     end
 end

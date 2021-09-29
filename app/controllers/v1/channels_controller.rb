@@ -1,11 +1,12 @@
 class V1::ChannelsController < ApplicationController
   before_action :set_channel, only: [:show, :update, :destroy]
+  before_action :channel_user?, except: %i[index new create]
 
   # GET /channels
   def index
     render json: {
       public: Channel.public_channel.order(title: :ASC),
-      personal: Channel.user_personal_channel(params[:user_id]).order(title: :ASC),
+      personal: Channel.user_personal_channel(@current_user).order(title: :ASC),
       group: Channel.group_channel.order(title: :ASC)
     }.to_json(include: :dashboards)
   end
@@ -86,5 +87,9 @@ class V1::ChannelsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def channel_params
       params.require(:channel).permit(:title, :description, :category, :user_id, members: [])
+    end
+
+    def channel_user?
+      render json: { errors: ['Forbidden access'] }, status: :forbidden if @channel.no_access?(@current_user)
     end
 end
