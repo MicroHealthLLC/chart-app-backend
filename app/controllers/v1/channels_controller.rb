@@ -1,5 +1,6 @@
 class V1::ChannelsController < ApplicationController
   before_action :set_channel, only: [:show, :update, :destroy]
+  before_action :channel_user?, except: %i[index new create]
 
   # GET /channels
   def index
@@ -80,5 +81,9 @@ class V1::ChannelsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def channel_params
       params.require(:channel).permit(:title, :description, :category, :user_id)
+    end
+
+    def channel_user?
+      render json: { errors: ['Forbidden access'] }, status: :forbidden if @channel.no_access?(@current_user)
     end
 end

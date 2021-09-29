@@ -8,4 +8,8 @@ class Channel < ApplicationRecord
   enum category: %w[group_channel personal_channel public_channel]
 
   scope :user_personal_channel, ->(user_id) { personal_channel.where(user_id: user_id) }
+
+  def no_access?(user)
+    personal_channel? && user_id != user.id
+  end
 end

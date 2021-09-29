@@ -1,5 +1,6 @@
 class V1::ReportsController < ApplicationController
   before_action :set_report, only: [:show, :update, :destroy]
+  before_action :report_user?, except: %i[index new create]
 
 # GET /reports
   def index
@@ -94,5 +95,9 @@ class V1::ReportsController < ApplicationController
         :last_updated_by,
         tags: []
       )
+    end
+
+    def report_user?
+      render json: { errors: ['Forbidden access'] }, status: :forbidden if @report.no_access?(@current_user)
     end
 end
