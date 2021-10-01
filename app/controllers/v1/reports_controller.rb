@@ -6,7 +6,7 @@ class V1::ReportsController < ApplicationController
   def index
     @public_reports = Report.public_reports.latest
     @personal_reports = Report.personal_reports(@current_user).latest
-    @group_reports = Report.group_reports.latest
+    @group_reports = Report.group_reports.latest.all_accessible(@current_user)
 
     render json: {
       public: @public_reports,
@@ -98,6 +98,6 @@ class V1::ReportsController < ApplicationController
     end
 
     def report_user?
-      render json: { errors: ['Forbidden access'] }, status: :forbidden if @report.no_access?(@current_user)
+      render json: { errors: ['Forbidden access'] }, status: :forbidden unless @report.access?(@current_user)
     end
 end

@@ -12,7 +12,17 @@ class Report < ApplicationRecord
   scope :personal_reports, ->(user_id) { joins(:channel).where(channels: { category: 1 }, user_id: user_id) }
   scope :latest, -> { order('created_at DESC').limit(6) }
 
-  def no_access?(user)
-    channel.personal_channel? && user_id != user.id
+  def access?(user)
+    return true if channel.public_channel?
+
+    if channel.personal_channel?
+      user_id == user.id
+    elsif channel.group_channel?
+      channel.member_ids.include?(user.id)
+    end
+  end
+
+  def self.all_accessible(user)
+    select { |r| r.access?(user) }
   end
 end
