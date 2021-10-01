@@ -6,8 +6,8 @@ class V1::ChannelsController < ApplicationController
   def index
     render json: {
       public: Channel.public_channel.order(title: :ASC),
-      personal: Channel.user_personal_channel(@current_user).order(title: :ASC),
-      group: Channel.group_channel.order(title: :ASC)
+      personal: Channel.user_personal_channel(@current_user.id).order(title: :ASC),
+      group: Channel.member_group_channel(@current_user.id).order(title: :ASC)
     }.to_json(include: :dashboards)
   end
 
@@ -82,6 +82,9 @@ class V1::ChannelsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_channel
       @channel = Channel.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => e
+      logger.info e
+      render json: { errors: ['Not found'] }, status: :not_found
     end
 
     # Only allow a list of trusted parameters through.
@@ -90,6 +93,6 @@ class V1::ChannelsController < ApplicationController
     end
 
     def channel_user?
-      render json: { errors: ['Forbidden access'] }, status: :forbidden if @channel.no_access?(@current_user)
+      render json: { errors: ['Forbidden access'] }, status: :forbidden unless @channel.access?(@current_user)
     end
 end
