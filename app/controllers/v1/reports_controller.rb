@@ -80,6 +80,9 @@ class V1::ReportsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_report
       @report = Report.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => e
+      logger.info e
+      render json: { errors: ['Not found'] }, status: :not_found
     end
 
     # Only allow a list of trusted parameters through.
