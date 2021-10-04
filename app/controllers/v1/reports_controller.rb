@@ -1,6 +1,6 @@
 class V1::ReportsController < ApplicationController
   before_action :set_report, only: [:show, :update, :destroy]
-  before_action :report_user?, except: %i[index new create]
+  before_action :report_user?, except: %i[index public personal group new create]
 
 # GET /reports
   def index
@@ -13,6 +13,21 @@ class V1::ReportsController < ApplicationController
       personal: @personal_reports,
       group: @group_reports
     }.to_json(include: [:channel, :data_set, :tags])
+  end
+
+  # GET /public_reports
+  def public
+    render json: Report.public_reports.to_json(include: [:channel, :data_set, :tags])
+  end
+  
+  # GET /personal_reports
+  def personal
+    render json: Report.personal_reports(@current_user).to_json(include: [:channel, :data_set, :tags])
+  end
+
+  # GET /group_reports
+  def group
+    render json: Report.group_reports.all_accessible(@current_user).to_json(include: [:channel, :data_set, :tags])
   end
 
   # GET /reports/1
