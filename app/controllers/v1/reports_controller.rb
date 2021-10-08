@@ -15,6 +15,21 @@ class V1::ReportsController < ApplicationController
     }.to_json(include: [:channel, :data_set, :tags])
   end
 
+  # GET /public_reports
+  def public
+    render json: Report.public_reports.to_json(include: [:channel, :data_set, :tags])
+  end
+  
+  # GET /personal_reports
+  def personal
+    render json: Report.personal_reports(@current_user).to_json(include: [:channel, :data_set, :tags])
+  end
+
+  # GET /group_reports
+  def group
+    render json: Report.group_reports.all_accessible(@current_user).to_json(include: [:channel, :data_set, :tags])
+  end
+
   # GET /reports/1
   def show
     render json: @report.to_json(include: 

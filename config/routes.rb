@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   namespace :v1 do
     resources :data_sets
     resources :reports
+    get "/public_reports", to: "reports#public"
+    get "/personal_reports", to: "reports#personal"
+    get "/group_reports", to: "reports#group"
     resources :channels
     resources :channels do
       resources :data_sets, only: :index
