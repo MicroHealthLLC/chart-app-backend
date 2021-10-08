@@ -1,6 +1,6 @@
 class V1::ReportsController < ApplicationController
   before_action :set_report, only: [:show, :update, :destroy]
-  before_action :report_user?, except: %i[index public personal group new create]
+  before_action :report_user?, except: %i[index new create]
 
 # GET /reports
   def index
