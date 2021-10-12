@@ -18,7 +18,7 @@ class V1::UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      render json: @user, status: :created, location: @user
+      render json: @user, status: :created
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -46,7 +46,8 @@ class V1::UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.fetch(:user, {})
+      params[:user][:password_hash] = params[:password]
+      params.require(:user).permit(:first_name, :last_name, :email, :password_hash)
     end
 
     def payload(user)
