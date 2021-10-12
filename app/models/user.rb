@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :channel_members
   has_many :channels, through: :channel_members
 
+  validates_uniqueness_of :email
+
   def password
     @password ||= Password.new(password_hash)
   end
