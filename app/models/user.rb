@@ -1,12 +1,12 @@
 class User < ApplicationRecord
   include BCrypt
-  has_many :channels
-  has_many :reports
-  has_many :dashboards
-  has_many :news
-  has_many :data_sets
+  has_many :channels, dependent: :destroy
+  has_many :reports, dependent: :destroy
+  has_many :dashboards, dependent: :destroy
+  has_many :news, dependent: :destroy
+  has_many :data_sets, dependent: :destroy
 
-  has_many :channel_members
+  has_many :channel_members, dependent: :destroy
   has_many :channels, through: :channel_members
 
   validates_uniqueness_of :email
