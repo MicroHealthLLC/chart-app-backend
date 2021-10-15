@@ -3,6 +3,9 @@ Rails.application.routes.draw do
     resources :data_sets
     resources :home, only: [:index]
     resources :reports
+    get "/public_reports_home", to: "reports_home#public"
+    get "/personal_reports_home", to: "reports_home#personal"
+    get "/group_reports_home", to: "reports_home#group"
     get "/public_reports", to: "reports#public"
     get "/personal_reports", to: "reports#personal"
     get "/group_reports", to: "reports#group"
