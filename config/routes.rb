@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :v1 do
     resources :data_sets
+    resources :home, only: [:index]
     resources :reports
     get "/public_reports", to: "reports#public"
     get "/personal_reports", to: "reports#personal"
